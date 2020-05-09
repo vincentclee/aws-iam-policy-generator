@@ -41,8 +41,8 @@ for line in open("files/all-actions.txt", "r"):
     actions[service].add(action[0:action.find(":") + 2] + "*")
 
 # open JSON file with blank policy
-with open("files/template.json", "r") as file: 
-    policy = json.load(file) 
+with open("files/template.json", "r") as file:
+    policy = json.load(file)
 
 # add all Actions from selected Services to the policy
 services = sorted(services)
@@ -57,7 +57,7 @@ for service in services:
 # Serialize JSON
 json_object = json.dumps(policy, indent=4)
 
-# Write policy to policy.json 
+# Write policy to policy.json
 with open("policy.json", "w") as file:
     file.write(json_object)
 
