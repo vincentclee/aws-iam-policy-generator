@@ -18,10 +18,16 @@ parser.add_argument("-s", "--services",
                     dest="services",
                     help="The command separated list of AWS Services by their service prefix.",
                     required=True)
+parser.add_argument("-o", "--output",
+                    default='policy.json',
+                    help="Output file (default: policy.json)")
+
 args = parser.parse_args()
 
 services = args.services.split(",")
 actions = {}
+
+output_file = args.output
 
 # open file with all AWS IAM Statement Actions
 for line in open("files/all-actions.txt", "r"):
@@ -56,10 +62,12 @@ for service in services:
 
 # Serialize JSON
 json_object = json.dumps(policy, indent=4)
+json_size = len(json_object)
 
-# Write policy to policy.json
-with open("policy.json", "w") as file:
+# Write policy to output_file
+with open(output_file, "w") as file:
     file.write(json_object)
 
-print("Great Success")
-print("AWS IAM policy generated: policy.json")
+print("Great Success \U0001F44D")
+
+print("AWS IAM policy generated: %s (%s characters)" % (output_file, json_size))
